@@ -1,0 +1,297 @@
+/* ==========================================================================
+   TEMA VISUAL MUNICIPALIDAD DE SAN JOAQUÍN - ENFOQUE MOBILE FIRST (DARK MODE)
+   ========================================================================== */
+
+:root {
+  --muni-purple: #6B2B85;
+  --muni-green: #1E5631;
+  --muni-dark: #1a1a2e;
+  --card-bg-dark: rgba(30, 27, 46, 0.95);
+  --text-main: #f8f9fa;
+  --text-muted: #adb5bd;
+}
+
+/* 1. Reset de HTML y Contenedores */
+html {
+  background-color: var(--muni-dark) !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--text-main) !important;
+  background: transparent !important;
+  overflow-x: hidden;
+}
+
+#root {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   2. ANIMACIONES DE FONDO
+   ========================================================= */
+
+body::before {
+  content: "";
+  position: fixed;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  background-image: url('https://images.unsplash.com/photo-1512474932049-78ac69ede12c?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+  animation: breathe 10s infinite alternate ease-in-out;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    270deg,
+    rgba(107, 43, 133, 0.7),
+    rgba(30, 86, 49, 0.85),
+    rgba(26, 26, 46, 0.9),
+    rgba(107, 43, 133, 0.7)
+  );
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: gradientShift 8s infinite ease-in-out;
+}
+
+@keyframes breathe {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    transform: scale(1.15) rotate(1deg);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* =========================================================
+   3. ESTILOS DE COMPONENTES (Glassmorphism & Dark Mode)
+   ========================================================= */
+
+.card {
+  background: var(--card-bg-dark) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+  overflow: hidden;
+  color: var(--text-main) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6) !important;
+}
+
+.card h4,
+.card h5,
+.card h6,
+.text-dark {
+  color: var(--text-main) !important;
+}
+
+.text-muted,
+.text-secondary {
+  color: var(--text-muted) !important;
+}
+
+.card-header {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.bg-dark {
+  background: rgba(15, 13, 25, 0.85) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-dark {
+  background: linear-gradient(135deg, var(--muni-purple), var(--muni-green)) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: white !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-dark:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  filter: brightness(1.2);
+}
+
+.btn-dark:disabled {
+  opacity: 0.6;
+  transform: none;
+}
+
+.form-control,
+.form-select {
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1rem;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  color: var(--text-main) !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.form-select option {
+  background-color: #1a1a2e;
+  color: white;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--muni-purple) !important;
+  box-shadow: 0 0 0 3px rgba(107, 43, 133, 0.4) !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.table {
+  margin-bottom: 0;
+  color: var(--text-main) !important;
+}
+
+.table > :not(caption) > * > * {
+  padding: 1rem 0.5rem;
+  background-color: transparent !important;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-main) !important;
+}
+
+.table-light {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.table td div.fw-bold,
+.table td span.fw-semibold {
+  color: var(--text-main) !important;
+}
+
+/* =========================================================
+   4. BARRA DE NAVEGACIÓN Y RESPONSIVE DESIGN (MOBILE FIRST)
+   ========================================================= */
+
+.barra-app {
+  flex-wrap: wrap;
+  row-gap: 0.25rem;
+}
+
+.barra-app .enlaces {
+  order: 3;
+  width: 100%;
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 0.25rem;
+}
+
+.barra-app .usuario {
+  order: 2;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .barra-app .enlaces {
+    order: 2;
+    width: auto;
+    flex: 1;
+    padding-bottom: 0;
+  }
+  .barra-app .usuario {
+    order: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-fluid,
+  .container {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-size: 1.25rem;
+  }
+
+  .card {
+    border-radius: 12px !important;
+  }
+
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .btn-group > .btn {
+    border-radius: 8px !important;
+    width: 100%;
+    margin: 0 !important;
+  }
+}
+
+/* =========================================================
+   5. PARCHE DE NEUTRALIZACIÓN DE BLANCOS DE BOOTSTRAP
+   ========================================================= */
+.bg-light,
+.bg-white {
+  background: transparent !important;
+}
+
+.card-body form .bg-light {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
