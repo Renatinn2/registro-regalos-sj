@@ -1,14 +1,32 @@
 export function descargarCSV(nombre, filas) {
   if (!filas?.length) return;
-  const cols = Object.keys(filas[0]);
-  const esc = (v) => {
-    const s = v == null ? '' : typeof v === 'object' ? JSON.stringify(v) : String(v);
-    return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+
+  const sep = ';';
+  const cabeceras = Object.keys(filas[0]);
+
+  const escapar = (val) => {
+    if (val === null || val === undefined) return '';
+    const texto = typeof val === 'object' ? JSON.stringify(val) : String(val);
+    if (texto.includes(sep) || texto.includes('"') || texto.includes('\n') || texto.includes('\r')) {
+      return `"${texto.replace(/"/g, '""')}"`;
+    }
+    return texto;
   };
-  const csv = [cols.join(','), ...filas.map((r) => cols.map((c) => esc(r[c])).join(','))].join('\r\n');
+
+  const lineas = [
+    cabeceras.join(sep),
+    ...filas.map((fila) => cabeceras.map((k) => escapar(fila[k])).join(sep)),
+  ];
+
+  const contenido = '\uFEFF' + lineas.join('\r\n');
+  const blob = new Blob([contenido], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' }));
-  a.download = `${nombre}.csv`;
+  a.href = url;
+  a.download = `${nombre}_${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(a.href);
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
